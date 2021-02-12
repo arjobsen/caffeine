@@ -1,25 +1,33 @@
+# caffeine.py
 import pyautogui
-import time
-import sys
+from time import sleep, time
+from datetime import timedelta
+import subprocess
 
-pyautogui.FAILSAFE = False
 
-# Get interval (seconds) from CLI argument
-if len(sys.argv) > 1:
-    interval = float(sys.argv[1])
-else:
-    interval = 60
-print("Interval set:", str(interval), "sec")
+def main():
+    print("Caffeine running\nBreak with Ctrl+C\n")
+    Dt = timedelta(minutes=3, seconds=59)
+    print("Wait interval is", Dt)
+    t0 = time()
+    while True:
+        # Print time running
+        time_running = timedelta(seconds=round(time() - t0))
+        print(f"\rTime running: {time_running}", end='')
+       sleep(Dt.total_seconds())
 
-i = 0
-print("Break with Ctrl+C")
-while True:
-    #pyautogui.moveTo(100, 100, duration=1)
-    #pyautogui.moveRel(0, 50, duration=1)
-    #pyautogui.press('volumeup')
-    time.sleep(1)
-    #pyautogui.press('volumedown')
-    pyautogui.press('shift')
-    time.sleep(interval)
-    i -= -1
-    print("\r" + str(i), end='')
+        # Press Shift to stay awake
+        pyautogui.press("shift")
+
+        # Ping network to keep VPN alive
+        s = subprocess.run(["ping", "solon.prd"], capture_output=True)
+        if s.returncode:
+            print("\nPing solon.prd failed.\n")
+
+
+if __name__ == "__main__":
+    # Als er iets mis gaat, wil ik het kunnen zien
+    try:
+        main()
+    finally:
+        input("\n\nPress any key to quit...\n")
