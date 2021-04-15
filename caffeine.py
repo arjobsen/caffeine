@@ -1,33 +1,45 @@
 # caffeine.py
+from time import sleep
+from datetime import datetime, timedelta
 import pyautogui
-from time import sleep, time
-from datetime import timedelta
-import subprocess
+import requests
+import traceback
 
 
 def main():
-    print("Caffeine running\nBreak with Ctrl+C\n")
-    Dt = timedelta(minutes=3, seconds=59)
-    print("Wait interval is", Dt)
-    t0 = time()
+    print(r"""
+                __  __      _            
+      ___ __ _ / _|/ _| ___(_)_ __   ___ 
+     / __/ _` | |_| |_ / _ \ | '_ \ / _ \
+    | (_| (_| |  _|  _|  __/ | | | |  __/
+     \___\__,_|_| |_|  \___|_|_| |_|\___|
+    
+    """)
+    print("Gestart op", datetime.now().strftime("%H:%M"))
+    Dt = timedelta(minutes=0, seconds=59)
+    print("Klikt op [shift] met interval", Dt)
+    print("\nStop met Ctrl+C\n")
     while True:
-        # Print time running
-        time_running = timedelta(seconds=round(time() - t0))
-        print(f"\rTime running: {time_running}", end='')
-       sleep(Dt.total_seconds())
-
-        # Press Shift to stay awake
+        # Press a button to stay awake
         pyautogui.press("shift")
 
-        # Ping network to keep VPN alive
-        s = subprocess.run(["ping", "solon.prd"], capture_output=True)
-        if s.returncode:
-            print("\nPing solon.prd failed.\n")
+        # Ping network to keep VPN alive - not tested
+        try:
+            requests.get("https://google.com")
+        except:
+            pass
+
+        # Wacht
+        sleep(Dt.total_seconds())
 
 
 if __name__ == "__main__":
     # Als er iets mis gaat, wil ik het kunnen zien
     try:
         main()
+    except Exception:
+        # Doe dit niet voor KeyboardInterrupt
+        print("Error. Maak aub een screenshot van onderstaande foutmelding\n")
+        traceback.print_exc()
     finally:
         input("\n\nPress any key to quit...\n")
