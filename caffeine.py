@@ -1,12 +1,12 @@
 # caffeine.py
-from time import sleep
-from datetime import datetime, timedelta
-import pyautogui
-import requests
-import traceback
-
-
 def main():
+    from time import sleep
+    from datetime import datetime, timedelta
+    import pyautogui
+    import requests
+    import traceback
+
+
     print(r"""
                 __  __      _            
       ___ __ _ / _|/ _| ___(_)_ __   ___ 
