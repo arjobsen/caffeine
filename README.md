@@ -2,7 +2,7 @@
 Voor slaperige computers.
 
 ## Download voor Windows
-Download caffeine.exe [hier](www.google.com). Dubbelklik om uit te voeren.
+Download [caffeine.exe](https://github.com/arjobsen/caffeine/raw/master/dist/caffeine.exe). Dubbelklik om uit te voeren.
 
 ## Ontwikkel
 Clone deze repo en installeer de benodigde packages in een virtual environment.
